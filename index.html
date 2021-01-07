@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Typing Speed Tester</title>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+Bhai+2&family=Open+Sans&family=Roboto:ital@1&display=swap" rel="stylesheet">
+</head>
+<style>
+    *{
+        margin: 0;
+        padding: 0;
+        background: cornflowerblue;
+        box-sizing: border-box;
+        font-family: 'Baloo Bhai 2', cursive;
+    }
+    .container{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+    }
+    #textarea{
+        border: 2px solid black;
+        border-radius: 5px 0;
+        color: white;
+        background: #202124;
+    }
+    #btn{
+        width: 65px;
+        height: 35px;
+        margin: 5px;
+        padding: 2px;
+        border-radius: 5px;
+    }
+    #heading{
+        color: white;
+    }
+    #sentence{
+        height: auto;
+    }
+    @media (max-width: 768px){
+    .container{
+        
+        height: auto;
+    }
+    #heading{
+       text-align: center;
+    }
+    #textarea{
+        height: 450px;
+        margin: 4px;
+        width: 90%;
+        padding: 12px;
+    }
+    #sentence{
+       text-align: inherit;
+       margin-left: 7%;
+    }
+    }
+</style>
+<body>
+    <div class="container">
+        <h1 id="heading">Welcome to Test your Typing Speed</h1>
+        <h2 id="sentence"></h2>
+        <textarea name="textarea" id="textarea" cols="100" rows="10" placeholder="Remember to be, Nice!"></textarea>
+        <button id="btn">Start</button>
+    </div>
+    <script>
+        let testsentence = ["Please take your dog, Cali, out for a walk – he really needs some exercise!", "What a beautiful day it is on the beach, here in beautiful and sunny Hawaii", "Rex Quinfrey, a renowned scientist, created plans for an invisibility machine", " Do you know why all those chemicals are so hazardous to the environment?", "Max Joykner sneakily drove his car around every corner looking for his dog.", "The two boys collected twigs outside, for over an hour, in the freezing cold!", "Trixie and Veronica, our two cats, just love to play with their pink ball of yarn","Hector quizzed Mr. Vexife for two hours, but he was unable to get any information", "The Reckson family decided to go to an amusement park on Wednesday"]
+        const sentence = document.getElementById('sentence');
+        const textarea = document.getElementById('textarea');
+        const btn = document.getElementById('btn');
+        let startTime, endTime;
+
+        const play = () =>{
+            const random = Math.floor(Math.random() * testsentence.length);
+            sentence.textContent = testsentence[random];
+            let date = new Date();
+            startTime = date.getTime();
+            btn.textContent = "Done!";
+        }
+        const endplay = () =>{
+            let date = new Date();
+            endTime = date.getTime();
+            let totalTime = ((endTime - startTime)/1000);
+            console.log(totalTime);
+
+            let totalstr = textarea.value;
+            let wordCount = wordcounter(totalstr);
+            let speed = Math.round((wordCount / totalTime) * 60);
+        console.log(speed);
+        let finalmsg = " You typed at the speed of " + speed + " words per minute, ";
+        console.log(finalmsg);
+        finalmsg += compareWords(sentence.textContent, totalstr);
+        alert(finalmsg);
+        }
+
+        const compareWords = (str1, str2) => {
+            let words1 = str1.split(" ");
+            let words2 = str2.split(" ");
+            let cnt = 0;
+
+            words1.forEach(function (item, index){
+                if(item == words2[index]) {
+                    cnt++;
+                }
+            });
+
+            let errrorWords = ( words1.length - cnt);
+            return(cnt + " correct out of " + words1.length + " words and the total number of errors are "+ errrorWords + ".");
+        }
+        const wordcounter = (str) =>{
+            let response = str.split(" ").length;
+            return response;
+        }
+      
+
+        
+        btn.addEventListener('click', function(){
+            if(this.textContent == "Start"){
+                textarea.disabled = false;
+                play();
+            }
+            else if(this.textContent == "Done!"){
+                textarea.disabled = true;
+                btn.textContent = "Start";
+                endplay();
+                // sentence.textContent = null;
+            }
+        })
+    </script>
+</body>
+</html>
