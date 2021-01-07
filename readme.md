@@ -1,1 +1,1 @@
-This is a Simple Website for Testting the user's Typing Speed made with HTML,CSS and Vanilla Js.
+# This is a Simple Website for Testting the user's Typing Speed made with HTML,CSS and Vanilla Js.
